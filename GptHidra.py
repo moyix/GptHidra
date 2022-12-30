@@ -8,7 +8,7 @@
 import urllib2
 import json
 from ghidra.util.task import TaskMonitor
-from ghidra.app.decompiler import DecompInterface
+from ghidra.app.decompiler import DecompInterface, DecompileOptions
 
 # Get your API key from https://beta.openai.com/account/api-keys
 API_KEY = ''
@@ -33,6 +33,11 @@ def getCurrentDecompiledFunction():
 
     # Create a DecompInterface object
     decompiler = DecompInterface()
+
+    # Pull decompiler options from the current program
+    opt = DecompileOptions()
+    opt.grabFromProgram(currentProgram)
+    decompiler.setOptions(opt)
 
     # Set the current program for the decompiler
     decompiler.openProgram(currentProgram)
